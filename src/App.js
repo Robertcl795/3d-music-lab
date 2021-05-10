@@ -1,25 +1,32 @@
-import logo from './logo.svg';
-import './App.css';
+import { Canvas } from '@react-three/fiber';
+import { OrbitControls, Stars } from '@react-three/drei';
+import './App.scss';
 
-function App() {
+const Box = () => (
+  <mesh position={[0,2,0]}>
+    <boxBufferGeometry attach="geometry"/>
+    <meshLambertMaterial attach="material" color="hotpink"/>
+  </mesh>
+)
+
+const Plane = () => (
+  <mesh position={[0,0,0]} rotation={[-Math.PI / 2,0,0]}>
+    <boxBufferGeometry attach="geometry" args={[100,100]} />
+    <meshLambertMaterial attach="material" color="lightblue"/>
+  </mesh>
+)
+
+export default function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
-
-export default App;
+    <Canvas>
+      <Stars/>
+      <ambientLight intensity={0.5} />
+      <spotLight
+        position={[10,15,10]} angle={0.3}
+      />
+      <OrbitControls/>
+      <Box/>
+      <Plane/>
+    </Canvas>
+  )
+};
